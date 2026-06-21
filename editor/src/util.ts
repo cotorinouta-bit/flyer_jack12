@@ -14,5 +14,5 @@ export function setPath<T>(obj: T, path: Path, value: any): T {
 }
 
 export function assetUrl(file: string): string {
-  return encodeURI("/assets/" + file);
+  return encodeURI(`${import.meta.env.BASE_URL}assets/${file}`);
 }

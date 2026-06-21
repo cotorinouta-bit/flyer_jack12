@@ -11,9 +11,7 @@ body { font-family: var(--font-g); background: #2b2b30; color: #eee; }
 
 /* ===== Public choice index ===== */
 .choice-page { min-height: 100vh; position: relative; display: grid; place-items: center; overflow: hidden; background: #181716; color: #f7f3ec; padding: 32px 18px; }
-.choice-bg { position: absolute; inset: 0; background:
-  linear-gradient(90deg, rgba(0,0,0,.72), rgba(0,0,0,.40)),
-  url("/assets/IMG_8274 2.JPG") center 42% / cover no-repeat; transform: scale(1.02); }
+.choice-bg { position: absolute; inset: 0; background-position: center 42%; background-size: cover; background-repeat: no-repeat; transform: scale(1.02); }
 .choice-panel { position: relative; width: min(880px, 100%); padding: 36px; border: 1px solid rgba(214,178,112,.34); background: rgba(24,18,18,.78); backdrop-filter: blur(14px); }
 .choice-eyebrow { margin: 0 0 12px; color: #d6b270; font-size: 14px; font-weight: 700; letter-spacing: 0; }
 .choice-panel h1 { margin: 0 0 28px; font-family: var(--font-s); font-size: 42px; line-height: 1.25; font-weight: 600; letter-spacing: 0; }

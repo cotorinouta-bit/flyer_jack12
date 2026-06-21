@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import type { Doc, Tone, Output, Tokens } from "./types";
 import { initialDoc } from "./data/doc";
 import { DocProvider, Selection } from "./editing";
-import { setPath, Path } from "./util";
+import { setPath, Path, assetUrl } from "./util";
 import { Scroll } from "./components/Scroll";
 import { Flyer } from "./components/Flyer";
 import { FreeLayer } from "./components/FreeLayer";
@@ -22,27 +22,31 @@ function tokenVars(t: Tokens): React.CSSProperties {
 const clone = (x: any) => JSON.parse(JSON.stringify(x));
 
 function ChoiceIndex() {
+  const base = import.meta.env.BASE_URL;
   const choices = [
     {
       title: "上品",
       desc: "落ち着いた信頼感で見せる縦長版",
-      href: "/?render=1&output=scroll&tone=elegant",
+      href: `${base}?render=1&output=scroll&tone=elegant`,
     },
     {
       title: "熱量",
       desc: "勢いと力強さで見せる縦長版",
-      href: "/?render=1&output=scroll&tone=passion",
+      href: `${base}?render=1&output=scroll&tone=passion`,
     },
     {
       title: "両方を比較",
       desc: "上品と熱量を横に並べて確認",
-      href: "/jack12_scroll_both.html",
+      href: `${base}jack12_scroll_both.html`,
     },
   ];
 
   return (
     <main className="choice-page">
-      <div className="choice-bg" />
+      <div
+        className="choice-bg"
+        style={{ backgroundImage: `linear-gradient(90deg, rgba(0,0,0,.72), rgba(0,0,0,.40)), url("${assetUrl("IMG_8274 2.JPG")}")` }}
+      />
       <section className="choice-panel" aria-label="JACK12 表示選択">
         <p className="choice-eyebrow">JACK12 PEACE PROGRAM</p>
         <h1>表示する資料を選択</h1>
@@ -54,7 +58,7 @@ function ChoiceIndex() {
             </a>
           ))}
         </div>
-        <a className="choice-edit" href="/?edit=1">エディターを開く</a>
+        <a className="choice-edit" href={`${base}?edit=1`}>エディターを開く</a>
       </section>
     </main>
   );
