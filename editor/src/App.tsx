@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { toJpeg } from "html-to-image";
 import type { Doc, Tone, Output, Tokens } from "./types";
 import { initialDoc } from "./data/doc";
 import { DocProvider, Selection } from "./editing";
@@ -118,6 +119,7 @@ export function App() {
   const [gridSize, setGridSize] = useState<number>(() => { const s = localStorage.getItem("jack12gridSize"); return s ? +s : 24; });
   const [gridSnap, setGridSnap] = useState<boolean>(() => localStorage.getItem("jack12gridSnap") !== "0");
   const [freeSel, setFreeSel] = useState<{ output: Output; ids: string[] }>({ output: "scroll", ids: [] });
+  const [savingJpg, setSavingJpg] = useState(false);
 
   // ----- 履歴（Undo/Redo）-----
   const past = useRef<Doc[]>([]);
@@ -245,6 +247,47 @@ export function App() {
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob); a.download = "jack12-doc.json"; a.click();
   };
+  const downloadJpg = async () => {
+    const el = document.getElementById("canvas-root");
+    if (!el || savingJpg) return;
+    setSavingJpg(true);
+    (document.activeElement as HTMLElement | null)?.blur?.();
+    document.body.classList.add("is-exporting-jpg");
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    try {
+      await document.fonts?.ready;
+      const imgs = Array.from(el.querySelectorAll("img"));
+      await Promise.all(imgs.map(async (img) => {
+        if (!img.complete) {
+          await new Promise<void>((resolve) => {
+            img.addEventListener("load", () => resolve(), { once: true });
+            img.addEventListener("error", () => resolve(), { once: true });
+          });
+        }
+        await img.decode?.().catch(() => undefined);
+      }));
+      const dataUrl = await toJpeg(el, {
+        quality: 0.95,
+        pixelRatio: 1,
+        cacheBust: true,
+        backgroundColor: doc.tokens[tone].paper || "#ffffff",
+        filter: (node) => {
+          if (!(node instanceof HTMLElement)) return true;
+          return !node.closest(".grid-ov,.rz-handle,.gap-rz,.photo-pick,.free-btn,.free-resize,.free-move");
+        },
+      });
+      const a = document.createElement("a");
+      a.href = dataUrl;
+      a.download = `jack12-${output}-${tone}.jpg`;
+      a.click();
+    } catch (err) {
+      console.error(err);
+      alert("JPG保存に失敗しました。画像を読み込み直してから、もう一度お試しください。");
+    } finally {
+      document.body.classList.remove("is-exporting-jpg");
+      setSavingJpg(false);
+    }
+  };
 
   const canUndo = past.current.length > 0;
   const canRedo = future.current.length > 0;
@@ -297,6 +340,7 @@ export function App() {
           </div>
           <div className="tb-group right">
             <button onClick={() => setPanelOpen((v) => !v)} title="パネルの表示/非表示">{panelOpen ? "パネル ▷" : "◁ パネル"}</button>
+            <button onClick={downloadJpg} disabled={savingJpg}>{savingJpg ? "JPG保存中" : "保存(JPG)"}</button>
             <button onClick={download}>保存(JSON)</button>
             <label className="filebtn">読込<input type="file" accept="application/json" onChange={exportFile} hidden /></label>
             <button onClick={() => { if (confirm("初期内容に戻します。よろしいですか？")) { loadFresh(initialDoc); setVariant(initialDoc.variant); } }}>リセット</button>

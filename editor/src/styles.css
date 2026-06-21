@@ -86,6 +86,15 @@ body { font-family: var(--font-g); background: #2b2b30; color: #eee; }
 [contenteditable] { outline: none; }
 .canvas [contenteditable]:hover { box-shadow: 0 0 0 1px rgba(120,160,255,.5); border-radius: 2px; }
 .canvas [contenteditable]:focus { box-shadow: 0 0 0 2px rgba(120,160,255,.9); border-radius: 2px; background: rgba(120,160,255,.06); }
+body.is-exporting-jpg .canvas [contenteditable],
+body.is-exporting-jpg .free-item { box-shadow: none !important; outline: none !important; background: transparent !important; }
+body.is-exporting-jpg .grid-ov,
+body.is-exporting-jpg .rz-handle,
+body.is-exporting-jpg .gap-rz,
+body.is-exporting-jpg .photo-pick,
+body.is-exporting-jpg .free-btn,
+body.is-exporting-jpg .free-resize,
+body.is-exporting-jpg .free-move { display: none !important; }
 
 /* ===== Canvas shells ===== */
 .canvas { position: relative; }
