@@ -57,7 +57,9 @@ export function Scroll({ tone, variant }: { tone: Tone; variant: string }) {
           </div>
           {pill ? (
             <Field path={["variants", variant, "scroll", tone, "pill"]} className="s-pill" style={{ background: t.primary }} />
-          ) : null}
+          ) : (
+            <div className="s-pill-spacer" aria-hidden="true" />
+          )}
           <Field path={["variants", variant, "scroll", tone, "h1"]} className="s-h1" as="h1" style={{ color: t.h1 }} />
           <Field path={["variants", variant, "scroll", tone, "heroBody"]} className="s-hero-body" as="p" />
           <div className="s-rule" style={{ background: t.divider }} />

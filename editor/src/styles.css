@@ -129,6 +129,7 @@ body { font-family: var(--font-g); background: #2b2b30; color: #eee; }
 .s-eyebrow { font-size: 24px; font-weight: 600; color: #ebdcb8; letter-spacing: .04em; }
 .s-hero-main { margin-top: auto; }
 .s-pill { align-self: flex-start; margin-top: 150px; font-size: 24px; font-weight: 600; color: #fff; padding: 10px 18px; border-radius: 22px; }
+.s-pill-spacer { align-self: flex-start; margin-top: 150px; height: 49px; }
 .s-h1 { font-family: var(--font-s); font-size: 66px; line-height: 1.28; margin: 26px 0 0; white-space: pre-wrap; font-weight: 600; }
 .s-hero-body { font-size: 30px; line-height: 1.75; color: #f5efe4; margin: 24px 0 0; max-width: 880px; }
 .s-rule { height: 3px; margin: 34px 0 24px; }
