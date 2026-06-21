@@ -20,6 +20,22 @@ function tokenVars(t: Tokens): React.CSSProperties {
   };
 }
 const clone = (x: any) => JSON.parse(JSON.stringify(x));
+const removedMetaPrefix = "公式プロフィールに基づく";
+const removedMetaLabels = [removedMetaPrefix + "ご案内", removedMetaPrefix + "紹介"];
+
+function sanitizeDoc<T>(value: T): T {
+  const walk = (v: any): any => {
+    if (typeof v === "string") {
+      return removedMetaLabels.reduce((text, label) => text.split(label).join(""), v).trim();
+    }
+    if (Array.isArray(v)) return v.map(walk);
+    if (v && typeof v === "object") {
+      Object.keys(v).forEach((key) => { v[key] = walk(v[key]); });
+    }
+    return v;
+  };
+  return walk(value);
+}
 
 function ChoiceIndex() {
   const base = import.meta.env.BASE_URL;
@@ -73,7 +89,7 @@ export function App() {
     if (renderMode) return initialDoc;
     try {
       const s = localStorage.getItem(LS_KEY);
-      if (s) { const d = JSON.parse(s); if (d && d.variants) { if (!d.free) d.free = { scroll: [], flyer: [] }; if (!d.sizes) d.sizes = {}; return d as Doc; } }
+      if (s) { const d = JSON.parse(s); if (d && d.variants) { if (!d.free) d.free = { scroll: [], flyer: [] }; if (!d.sizes) d.sizes = {}; return sanitizeDoc(d) as Doc; } }
     } catch {}
     return initialDoc;
   });
@@ -114,7 +130,7 @@ export function App() {
   // export時もlocalStorageの最新docを使う
   useEffect(() => {
     if (renderMode) {
-      try { const s = localStorage.getItem(LS_KEY); if (s) { const d = JSON.parse(s); if (d && d.variants) { if (!d.free) d.free = { scroll: [], flyer: [] }; if (!d.sizes) d.sizes = {}; setDoc(d); } } } catch {}
+      try { const s = localStorage.getItem(LS_KEY); if (s) { const d = JSON.parse(s); if (d && d.variants) { if (!d.free) d.free = { scroll: [], flyer: [] }; if (!d.sizes) d.sizes = {}; setDoc(sanitizeDoc(d)); } } } catch {}
     }
   }, [renderMode]);
   useEffect(() => { if (!renderMode) localStorage.setItem(LS_KEY, JSON.stringify(doc)); }, [doc, renderMode]);
@@ -208,7 +224,7 @@ export function App() {
 
   const exportFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0]; if (!f) return;
-    f.text().then((txt) => { try { const d = JSON.parse(txt); if (d.variants) { if (!d.free) d.free = { scroll: [], flyer: [] }; if (!d.sizes) d.sizes = {}; loadFresh(d); if (!d.variants[variant]) setVariant(Object.keys(d.variants)[0]); } else alert("対応していないJSONです"); } catch { alert("JSON読込に失敗"); } });
+    f.text().then((txt) => { try { const d = JSON.parse(txt); if (d.variants) { if (!d.free) d.free = { scroll: [], flyer: [] }; if (!d.sizes) d.sizes = {}; loadFresh(sanitizeDoc(d)); if (!d.variants[variant]) setVariant(Object.keys(d.variants)[0]); } else alert("対応していないJSONです"); } catch { alert("JSON読込に失敗"); } });
   };
   const download = () => {
     const blob = new Blob([JSON.stringify(doc, null, 2)], { type: "application/json" });
