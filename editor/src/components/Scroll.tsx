@@ -1,7 +1,6 @@
 import React from "react";
 import type { Tone } from "../types";
 import { Field, PicCard, PhotoBox, useDoc } from "../editing";
-import { QrCode } from "./QrCode";
 import { BottomHandle, GapResizer, sizeStyle } from "./Resizable";
 import { getPath, Path } from "../util";
 
@@ -172,22 +171,7 @@ export function Scroll({ tone, variant }: { tone: Tone; variant: string }) {
           <Field path={["variants", variant, "scroll", tone, "decisionNote"]} className="s-d-note" as="p" />
           <Field path={["disclaimer"]} className="s-d-disc" as="p" />
         </section>
-
-        {/* CTA */}
-        <section className="s-cta" style={{ background: t.primary }}>
-          <div className="s-cta-text">
-            <Field path={["cta", "headline"]} className="s-cta-head" as="div" />
-            <Field path={["cta", "sub"]} className="s-cta-sub" as="div" />
-            <Field path={["cta", "url"]} className="s-cta-url" as="div" />
-          </div>
-          <div className="s-cta-qr">
-            <QrCode value={doc.cta.url} size={150} fg={COLORSink} />
-            <div className="s-cta-cap">スマホで読み取り</div>
-          </div>
-        </section>
       </div>
     </div>
   );
 }
-
-const COLORSink = "#1C1918";
