@@ -311,7 +311,7 @@ TRUST01 = [
 ]
 
 TRUST02 = [
-    ("王族・貴族関係者の前で披露", "貴族・ハイアットファミリー御前披露において「王室勲章史上、世界最高峰のエンターテイナー」と評された実績として紹介。"),
+    ("王族・貴族関係者の前で披露", "貴族・ハイアットファミリー御前で披露し、国際的な場で評価を重ねています。"),
     ("王族・国家元首に認められた活動背景", "王族、貴族、国家元首、大統領、国際機関から招請を受けてきた国際親善・文化交流に関わる活動。"),
     ("国際式典・大臣御前での披露", "トランプ大統領就任式関連行事、ネパール日本文化交流プログラム、スリランカ観光大臣御前、タイのロイヤルファミリー関連表彰など。"),
     ("カンヌ・モナコ・Forbes関連の舞台", "カンヌ国際映画祭レッドカーペット、モナコ公室主催『薔薇の舞踏会』、Forbes Villa Party & Dinner、フランス貴族主催パーティー等での参加・出演。"),
@@ -361,7 +361,8 @@ def build_scroll(tone):
     def section(y, label, title, intro=None):
         draw.text((mm, y), label, font=mf["tag"], fill=style["label_color"])
         y += 38
-        y = ml(mm, y, title, mf["h2"], COLORS["ink"], mw - 2 * mm, 10)
+        if title:
+            y = ml(mm, y, title, mf["h2"], COLORS["ink"], mw - 2 * mm, 10)
         if intro:
             y += 18
             y = ml(mm, y, intro, mf["body"], COLORS["muted"], mw - 2 * mm, 13)
@@ -462,7 +463,7 @@ def build_scroll(tone):
     y = bullet_block(y, VALUE_BULLETS)
 
     # --- PROFILE ---
-    y = section(y, "OFFICIAL PROFILE", "JACK12という人物", None)
+    y = section(y, "OFFICIAL PROFILE", None, None)
     draw.text((mm, y), "JACK12", font=mf["serif_name"], fill=COLORS["ink"])
     y += 86
     y = ml(mm, y, "地球平和エンターテイナー / Global Peace Entertainer\nJACK12 GLOBAL HOLDINGS 合同会社 CEO", mf["body"], style["primary"], mw - 2 * mm, 10)

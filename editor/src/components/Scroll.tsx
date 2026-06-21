@@ -127,7 +127,7 @@ export function Scroll({ tone, variant }: { tone: Tone; variant: string }) {
         {/* PROFILE */}
         <section className="s-sec">
           <Label>OFFICIAL PROFILE</Label>
-          <Field path={["profileTitle"]} className="s-title" as="h2" />
+          {doc.profileTitle.trim() ? <Field path={["profileTitle"]} className="s-title" as="h2" /> : null}
           <Field path={["profileName"]} className="s-pname" as="div" />
           <Field path={["profileRole"]} className="s-prole" as="div" style={{ color: t.primary }} />
           <Field path={["profileBody"]} className="s-intro" as="p" />

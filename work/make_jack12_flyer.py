@@ -154,7 +154,8 @@ def generate_mobile_scroll():
     def section(y, label, title, intro=None):
         draw.text((mm, y), label, font=mf["tag"], fill=COLORS["gold"])
         y += 38
-        y = ml(mm, y, title, mf["h2"], COLORS["ink"], mw - 2 * mm, 10)
+        if title:
+            y = ml(mm, y, title, mf["h2"], COLORS["ink"], mw - 2 * mm, 10)
         if intro:
             y += 18
             y = ml(mm, y, intro, mf["body"], COLORS["muted"], mw - 2 * mm, 13)
@@ -265,7 +266,7 @@ def generate_mobile_scroll():
     )
 
     # Profile positioning
-    y = section(y, "OFFICIAL PROFILE", "JACK12とは", None)
+    y = section(y, "OFFICIAL PROFILE", None, None)
     draw.text((mm, y), "JACK12", font=mf["serif_name"], fill=COLORS["ink"])
     y += 86
     y = ml(mm, y, "地球平和エンターテイナー / Global Peace Entertainer\nJACK12 GLOBAL HOLDINGS 合同会社 CEO", mf["body"], COLORS["burgundy"], mw - 2 * mm, 10)
@@ -273,7 +274,7 @@ def generate_mobile_scroll():
     y = ml(
         mm,
         y,
-        "公式プロフィールでは、王様公認で「名誉親善大使」の称号を授与された、世界唯一無二のエンターテイナーとして紹介されています。王族・貴族・国家元首・大統領・国際機関との接点を背景に、国際親善・次世代教育・人権・平和構築へエンターテインメントを通じて貢献しています。",
+        "王様公認で「名誉親善大使」の称号を授かったエンターテイナーです。王族・貴族・国家元首・大統領・国際機関との接点を背景に、国際親善・次世代教育・人権・平和構築へエンターテインメントを通じて貢献しています。",
         mf["body"],
         COLORS["muted"],
         mw - 2 * mm,
@@ -295,11 +296,11 @@ def generate_mobile_scroll():
     y = image_card(y, "IMG_8214 2.JPG", "国際機関での活動記録", (0.35, 0.45), 500)
 
     # Royals and international stages
-    y = section(y, "TRUST 02", "王族・要人・国際舞台", "王族関係者、各国大臣、国際式典、カンヌ、モナコ等の場で出演・披露。公式プロフィールでは、国際舞台での評価が大きな強みとして位置づけられています。")
+    y = section(y, "TRUST 02", "王族・要人・国際舞台", "王族関係者、各国大臣、国際式典、カンヌ、モナコ等の場で出演・披露。国際舞台での経験が、活動の大きな背景になっています。")
     y = bullet_block(
         y,
         [
-            ("王族・貴族関係者の前で披露", "貴族・ハイアットファミリー御前披露において「王室勲章史上、世界最高峰のエンターテイナー」と評された実績として紹介。"),
+            ("王族・貴族関係者の前で披露", "貴族・ハイアットファミリー御前で披露し、国際的な場で評価を重ねています。"),
             ("王族・国家元首に認められた活動背景", "王族、貴族、国家元首、大統領、国際機関から招請を受けてきた国際親善・文化交流に関わる活動。"),
             ("国際式典・大臣御前での披露", "トランプ大統領就任式関連行事、ネパール日本文化交流プログラム、スリランカ観光大臣御前、タイのロイヤルファミリー関連表彰など。"),
             ("カンヌ・モナコ・Forbes関連の舞台", "カンヌ国際映画祭レッドカーペット、モナコ公室主催『薔薇の舞踏会』、Forbes Villa Party & Dinner、フランス貴族主催パーティー等での参加・出演。"),
