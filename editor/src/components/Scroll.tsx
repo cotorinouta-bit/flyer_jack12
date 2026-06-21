@@ -32,6 +32,7 @@ export function Scroll({ tone, variant }: { tone: Tone; variant: string }) {
   const t = doc.tokens[tone];
   const c = doc.variants[variant].scroll[tone];
   const heroFocal = doc.heroFocalScroll;
+  const pill = c.pill.trim();
 
   return (
     <div className="scroll">
@@ -53,7 +54,9 @@ export function Scroll({ tone, variant }: { tone: Tone; variant: string }) {
             <PhotoBox file={doc.crest} focal={{ x: 0.5, y: 0.5 }} focalPath={["_noop"]} className="s-crest" radius={18} />
             <Field path={["eyebrow"]} className="s-eyebrow" />
           </div>
-          <Field path={["variants", variant, "scroll", tone, "pill"]} className="s-pill" style={{ background: t.primary }} />
+          {pill ? (
+            <Field path={["variants", variant, "scroll", tone, "pill"]} className="s-pill" style={{ background: t.primary }} />
+          ) : null}
           <Field path={["variants", variant, "scroll", tone, "h1"]} className="s-h1" as="h1" style={{ color: t.h1 }} />
           <Field path={["variants", variant, "scroll", tone, "heroBody"]} className="s-hero-body" as="p" />
           <div className="s-rule" style={{ background: t.divider }} />

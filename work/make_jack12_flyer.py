@@ -188,8 +188,6 @@ def generate_mobile_scroll():
     paste_rounded(canvas, crest, (mm, 54, mm + 118, 172), 20)
     draw.text((mm + 142, 78), "JACK12 PEACE PROGRAM", font=mf["tag"], fill=(235, 220, 184))
     y = 246
-    pill(mm, y, "公式プロフィールに基づく紹介", COLORS["burgundy"])
-    y += 78
     y = ml(mm, y, "世界唯一無二の体験を、\n経営者の学びへ。", mf["h1"], COLORS["white"], mw - 2 * mm, 10)
     y += 28
     y = ml(
