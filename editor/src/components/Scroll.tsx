@@ -32,8 +32,7 @@ export function Scroll({ tone, variant }: { tone: Tone; variant: string }) {
   const t = doc.tokens[tone];
   const c = doc.variants[variant].scroll[tone];
   const heroFocal = doc.heroFocalScroll;
-  const rawPill = c.pill.trim();
-  const pill = tone === "elegant" || rawPill.includes("公式プロフィール") ? "" : rawPill;
+  const pill = "";
 
   return (
     <div className="scroll">
