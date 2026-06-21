@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>JACK12 縦長HTML 上品 / 熱量</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #242326;
+        --panel: #303034;
+        --line: #4a4540;
+        --text: #f5efe4;
+        --muted: #c8bca8;
+        --gold: #d6b270;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", system-ui, sans-serif;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 14px 18px;
+        background: rgba(36, 35, 38, 0.94);
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(10px);
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.4;
+        letter-spacing: 0;
+      }
+
+      .actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 34px;
+        padding: 7px 11px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        color: var(--text);
+        text-decoration: none;
+        font-size: 13px;
+        background: #343238;
+      }
+
+      a:hover {
+        border-color: var(--gold);
+      }
+
+      main {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(360px, 1fr));
+        gap: 18px;
+        padding: 18px;
+        align-items: start;
+      }
+
+      section {
+        min-width: 0;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background: var(--panel);
+      }
+
+      h2 {
+        margin: 0;
+        padding: 12px 14px;
+        font-size: 15px;
+        line-height: 1.4;
+        color: var(--muted);
+        border-bottom: 1px solid var(--line);
+        letter-spacing: 0;
+      }
+
+      .frame-box {
+        position: relative;
+        overflow: hidden;
+        background: #171719;
+      }
+
+      .frame-scale {
+        width: 1080px;
+        transform-origin: top left;
+      }
+
+      iframe {
+        display: block;
+        width: 1080px;
+        height: 14000px;
+        border: 0;
+        background: #f7f3ec;
+      }
+
+      @media (max-width: 900px) {
+        header {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        main {
+          grid-template-columns: 1fr;
+          padding: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>JACK12 縦長HTML 上品 / 熱量</h1>
+      <div class="actions">
+        <a href="/?render=1&amp;output=scroll&amp;tone=elegant" target="_blank" rel="noreferrer">上品だけ開く</a>
+        <a href="/?render=1&amp;output=scroll&amp;tone=passion" target="_blank" rel="noreferrer">熱量だけ開く</a>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>上品</h2>
+        <div class="frame-box">
+          <div class="frame-scale">
+            <iframe src="/?render=1&amp;output=scroll&amp;tone=elegant" title="JACK12 縦長 上品"></iframe>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>熱量</h2>
+        <div class="frame-box">
+          <div class="frame-scale">
+            <iframe src="/?render=1&amp;output=scroll&amp;tone=passion" title="JACK12 縦長 熱量"></iframe>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      function fitFrames() {
+        document.querySelectorAll(".frame-box").forEach((box) => {
+          const scaleWrap = box.querySelector(".frame-scale");
+          const frame = box.querySelector("iframe");
+          const scale = Math.max(0.18, Math.min(1, box.clientWidth / 1080));
+          let height = 14000;
+
+          try {
+            const canvas = frame.contentDocument.querySelector("#canvas-root");
+            if (canvas) height = Math.ceil(canvas.getBoundingClientRect().height);
+          } catch (_) {}
+
+          frame.style.height = height + "px";
+          scaleWrap.style.transform = "scale(" + scale + ")";
+          box.style.height = Math.ceil(height * scale) + "px";
+        });
+      }
+
+      window.addEventListener("resize", fitFrames);
+      document.querySelectorAll("iframe").forEach((frame) => {
+        frame.addEventListener("load", () => {
+          setTimeout(fitFrames, 400);
+          setTimeout(fitFrames, 1200);
+        });
+      });
+      fitFrames();
+    </script>
+  </body>
+</html>

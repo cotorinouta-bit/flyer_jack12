@@ -1,0 +1,37 @@
+.DS_Store
+*.pyc
+__pycache__/
+
+# Local dependencies and build caches
+node_modules/
+.pnpm-store/
+editor/node_modules/
+editor/dist/
+editor/tsconfig.tsbuildinfo
+
+# Generated flyer exports
+output/
+
+# Keep only images currently used by the flyer data
+assets/*
+!assets/IMG_8196 2.JPG
+!assets/IMG_8204 2.JPG
+!assets/IMG_8214 2.JPG
+!assets/IMG_8217 2.JPG
+!assets/IMG_8230 2.JPG
+!assets/IMG_8235 2.JPG
+!assets/IMG_8240 2.JPG
+!assets/IMG_8243 2.JPG
+!assets/IMG_8246 2.JPG
+!assets/IMG_8249 2.JPG
+!assets/IMG_8252 2.JPG
+!assets/IMG_8259 2.JPG
+!assets/IMG_8274 2.JPG
+!assets/IMG_8280 2.JPG
+!assets/IMG_8282 2.JPG
+
+# Local backups made during recovery/editing
+editor/doc.backup_*.json
+
+# Temporary previews
+assets/_correction_previews/

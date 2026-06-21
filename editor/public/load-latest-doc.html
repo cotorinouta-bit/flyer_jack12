@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>JACK12 最新データ読込</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #242326;
+        color: #f5efe4;
+        font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", system-ui, sans-serif;
+      }
+
+      main {
+        width: min(520px, calc(100vw - 32px));
+        padding: 24px;
+        border: 1px solid #4a4540;
+        background: #303034;
+      }
+
+      h1 {
+        margin: 0 0 12px;
+        font-size: 20px;
+        line-height: 1.5;
+      }
+
+      p {
+        margin: 0;
+        color: #c8bca8;
+        font-size: 14px;
+        line-height: 1.8;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>最新データを読み込んでいます</h1>
+      <p id="status">少し待つとエディターへ戻ります。</p>
+    </main>
+    <script>
+      const status = document.getElementById("status");
+
+      fetch("/doc.json", { cache: "no-store" })
+        .then((res) => {
+          if (!res.ok) throw new Error("doc.json を読めませんでした");
+          return res.text();
+        })
+        .then((text) => {
+          const doc = JSON.parse(text);
+          if (!doc || !doc.variants) throw new Error("対応していないJSONです");
+          localStorage.setItem("jack12doc.v1", text);
+          status.textContent = "読み込みました。エディターへ戻ります。";
+          setTimeout(() => {
+            location.href = "/";
+          }, 400);
+        })
+        .catch((error) => {
+          status.textContent = "読み込みに失敗しました: " + error.message;
+        });
+    </script>
+  </body>
+</html>
