@@ -21,10 +21,16 @@ function tokenVars(t: Tokens): React.CSSProperties {
 }
 const clone = (x: any) => JSON.parse(JSON.stringify(x));
 const removedMetaPrefix = "公式プロフィールに基づく";
+const removedProfileLead = ["公式プロフィール", "によると"].join("");
+const removedStrengthNote = ["公式プロフィールでも、こうした国際舞台での評価が大きな", "強み", "とされています。"].join("");
+const removedStrengthTail = ["強み", "とされ", "ています。"].join("");
 const removedSourceNote = ["掲載内容は", "ご提供プロフィール・公開用素材", "に基づく紹介文です"].join("");
 const removedMetaLabels = [
   removedMetaPrefix + "ご案内",
   removedMetaPrefix + "紹介",
+  removedProfileLead,
+  removedStrengthNote,
+  removedStrengthTail,
   removedSourceNote,
   removedSourceNote + "。",
 ];
