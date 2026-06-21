@@ -21,7 +21,13 @@ function tokenVars(t: Tokens): React.CSSProperties {
 }
 const clone = (x: any) => JSON.parse(JSON.stringify(x));
 const removedMetaPrefix = "公式プロフィールに基づく";
-const removedMetaLabels = [removedMetaPrefix + "ご案内", removedMetaPrefix + "紹介"];
+const removedSourceNote = ["掲載内容は", "ご提供プロフィール・公開用素材", "に基づく紹介文です"].join("");
+const removedMetaLabels = [
+  removedMetaPrefix + "ご案内",
+  removedMetaPrefix + "紹介",
+  removedSourceNote,
+  removedSourceNote + "。",
+];
 
 function sanitizeDoc<T>(value: T): T {
   const walk = (v: any): any => {
