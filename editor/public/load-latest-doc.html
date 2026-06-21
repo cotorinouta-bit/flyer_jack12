@@ -55,7 +55,7 @@
           localStorage.setItem("jack12doc.v1", text);
           status.textContent = "読み込みました。エディターへ戻ります。";
           setTimeout(() => {
-            location.href = "/";
+            location.href = "/?edit=1";
           }, 400);
         })
         .catch((error) => {

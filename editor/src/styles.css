@@ -9,6 +9,30 @@ body { font-family: var(--font-g); background: #2b2b30; color: #eee; }
 /* 日本語：文節優先の自動改行 + 禁則 */
 .canvas, .canvas * { line-break: strict; word-break: auto-phrase; overflow-wrap: normal; }
 
+/* ===== Public choice index ===== */
+.choice-page { min-height: 100vh; position: relative; display: grid; place-items: center; overflow: hidden; background: #181716; color: #f7f3ec; padding: 32px 18px; }
+.choice-bg { position: absolute; inset: 0; background:
+  linear-gradient(90deg, rgba(0,0,0,.72), rgba(0,0,0,.40)),
+  url("/assets/IMG_8274 2.JPG") center 42% / cover no-repeat; transform: scale(1.02); }
+.choice-panel { position: relative; width: min(880px, 100%); padding: 36px; border: 1px solid rgba(214,178,112,.34); background: rgba(24,18,18,.78); backdrop-filter: blur(14px); }
+.choice-eyebrow { margin: 0 0 12px; color: #d6b270; font-size: 14px; font-weight: 700; letter-spacing: 0; }
+.choice-panel h1 { margin: 0 0 28px; font-family: var(--font-s); font-size: 42px; line-height: 1.25; font-weight: 600; letter-spacing: 0; }
+.choice-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.choice-card { display: block; min-height: 132px; padding: 20px; border: 1px solid rgba(247,243,236,.24); color: #f7f3ec; text-decoration: none; background: rgba(255,255,255,.07); transition: transform .16s ease, border-color .16s ease, background .16s ease; }
+.choice-card:hover { transform: translateY(-2px); border-color: #d6b270; background: rgba(255,255,255,.13); }
+.choice-card span { display: block; font-size: 27px; font-weight: 800; line-height: 1.25; }
+.choice-card small { display: block; margin-top: 12px; color: #dfd8cf; font-size: 14px; line-height: 1.65; }
+.choice-edit { display: inline-flex; align-items: center; min-height: 38px; margin-top: 18px; padding: 8px 13px; border: 1px solid rgba(214,178,112,.5); color: #f7f3ec; text-decoration: none; font-size: 13px; background: rgba(112,22,31,.74); }
+.choice-edit:hover { background: rgba(156,32,44,.86); }
+
+@media (max-width: 760px) {
+  .choice-page { place-items: stretch; align-items: center; }
+  .choice-panel { padding: 26px 18px; }
+  .choice-panel h1 { font-size: 32px; }
+  .choice-grid { grid-template-columns: 1fr; }
+  .choice-card { min-height: 104px; }
+}
+
 /* ===== App chrome ===== */
 .app { display: flex; flex-direction: column; height: 100vh; }
 .toolbar { display: flex; align-items: center; gap: 18px; padding: 8px 14px; background: #1c1c20; border-bottom: 1px solid #000; flex-wrap: wrap; }

@@ -21,9 +21,49 @@ function tokenVars(t: Tokens): React.CSSProperties {
 }
 const clone = (x: any) => JSON.parse(JSON.stringify(x));
 
+function ChoiceIndex() {
+  const choices = [
+    {
+      title: "上品",
+      desc: "落ち着いた信頼感で見せる縦長版",
+      href: "/?render=1&output=scroll&tone=elegant",
+    },
+    {
+      title: "熱量",
+      desc: "勢いと力強さで見せる縦長版",
+      href: "/?render=1&output=scroll&tone=passion",
+    },
+    {
+      title: "両方を比較",
+      desc: "上品と熱量を横に並べて確認",
+      href: "/jack12_scroll_both.html",
+    },
+  ];
+
+  return (
+    <main className="choice-page">
+      <div className="choice-bg" />
+      <section className="choice-panel" aria-label="JACK12 表示選択">
+        <p className="choice-eyebrow">JACK12 PEACE PROGRAM</p>
+        <h1>表示する資料を選択</h1>
+        <div className="choice-grid">
+          {choices.map((choice) => (
+            <a className="choice-card" href={choice.href} key={choice.title}>
+              <span>{choice.title}</span>
+              <small>{choice.desc}</small>
+            </a>
+          ))}
+        </div>
+        <a className="choice-edit" href="/?edit=1">エディターを開く</a>
+      </section>
+    </main>
+  );
+}
+
 export function App() {
   const params = new URLSearchParams(location.search);
   const renderMode = params.get("render") === "1";
+  const editMode = params.get("edit") === "1";
 
   const [doc, setDoc] = useState<Doc>(() => {
     if (renderMode) return initialDoc;
@@ -156,6 +196,10 @@ export function App() {
 
   if (renderMode) {
     return <DocProvider value={ctx}><div className="render-only">{canvas}</div></DocProvider>;
+  }
+
+  if (!editMode) {
+    return <ChoiceIndex />;
   }
 
   const exportFile = (e: React.ChangeEvent<HTMLInputElement>) => {
