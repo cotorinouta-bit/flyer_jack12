@@ -350,16 +350,6 @@ def generate_mobile_scroll():
         mw - 2 * mm - 68,
         11,
     )
-    next_y += 24
-    next_y = ml(
-        mm + 34,
-        next_y,
-        "本資料は公開用情報をもとに構成しています。人脈形成、商談成立、成果を保証するものではありません。",
-        mf["small"],
-        (190, 184, 174),
-        mw - 2 * mm - 68,
-        9,
-    )
     y += 770
 
     final = canvas.crop((0, 0, mw, y))

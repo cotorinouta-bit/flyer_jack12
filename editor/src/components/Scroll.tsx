@@ -32,6 +32,7 @@ export function Scroll({ tone, variant }: { tone: Tone; variant: string }) {
   const c = doc.variants[variant].scroll[tone];
   const heroFocal = doc.heroFocalScroll;
   const pill = "";
+  const disclaimer = doc.disclaimer.trim();
 
   return (
     <div className="scroll">
@@ -169,7 +170,7 @@ export function Scroll({ tone, variant }: { tone: Tone; variant: string }) {
           </div>
           <div className="s-d-rule" />
           <Field path={["variants", variant, "scroll", tone, "decisionNote"]} className="s-d-note" as="p" />
-          <Field path={["disclaimer"]} className="s-d-disc" as="p" />
+          {disclaimer ? <Field path={["disclaimer"]} className="s-d-disc" as="p" /> : null}
         </section>
       </div>
     </div>

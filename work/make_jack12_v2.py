@@ -324,7 +324,7 @@ TRUST03 = [
     ("映画・表現活動", "映画プロデューサー / 俳優。『冤罪のつくりかた』『カメレオン』『西成ゴローの4億円』関連実績など、表現と社会貢献を横断。"),
 ]
 
-DISCLAIMER = "本資料は公開用情報をもとに構成しています。人脈形成、商談成立、成果を保証するものではありません。価格はすべて税込です。"
+DISCLAIMER = ""
 
 
 # ===== 縦長スクロール生成 ==============================================
@@ -521,7 +521,8 @@ def build_scroll(tone):
     next_y += 34
     next_y = ml(mm + 34, next_y, copy["decision_note"], mf["body_s"], (223, 216, 207), mw - 2 * mm - 68, 11)
     next_y += 24
-    next_y = ml(mm + 34, next_y, DISCLAIMER, mf["small"], (190, 184, 174), mw - 2 * mm - 68, 9)
+    if DISCLAIMER:
+        next_y = ml(mm + 34, next_y, DISCLAIMER, mf["small"], (190, 184, 174), mw - 2 * mm - 68, 9)
     y += box_h + 70
 
     final = canvas.crop((0, 0, mw, y))

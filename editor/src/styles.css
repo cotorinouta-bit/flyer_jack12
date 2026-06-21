@@ -194,6 +194,7 @@ body.is-exporting-jpg .free-move { display: none !important; }
 .s-d-body { font-size: 30px; margin-top: 6px; }
 .s-d-rule { height: 2px; background: rgba(255,255,255,.18); margin: 32px 0 28px; }
 .s-d-note { font-size: 25px; line-height: 1.8; color: #dfd8cf; margin: 0 0 18px; }
+.s-d-note:last-child { margin-bottom: 0; }
 .s-d-disc { font-size: 21px; line-height: 1.7; color: #b6b0a6; margin: 0; }
 
 /* ===== FLYER (A4) design ===== */

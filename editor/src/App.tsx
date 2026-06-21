@@ -27,6 +27,8 @@ const removedProfileLead = ["公式プロフィール", "によると"].join("")
 const removedStrengthNote = ["公式プロフィールでも、こうした国際舞台での評価が大きな", "強み", "とされ", "ています。"].join("");
 const removedStrengthTail = ["強み", "とされ", "ています。"].join("");
 const removedSourceNote = ["掲載", "内容は", "ご提供プロフィール・公開用素材", "に", "基づく", "紹介文です"].join("");
+const removedDisclaimer = ["本資料は", "公開用情報をもとに構成しています。", "人脈形成、商談成立、成果を保証するものではありません。", "価格はすべて税込です。"].join("");
+const removedShortDisclaimer = ["本資料は", "公開用情報をもとに構成しています。", "人脈形成、商談成立、成果を保証するものではありません。"].join("");
 const removedMetaLabels = [
   removedProfileTitle,
   removedMetaPrefix + "ご案内",
@@ -36,6 +38,8 @@ const removedMetaLabels = [
   removedStrengthTail,
   removedSourceNote,
   removedSourceNote + "。",
+  removedDisclaimer,
+  removedShortDisclaimer,
 ];
 
 function sanitizeDoc<T>(value: T): T {
