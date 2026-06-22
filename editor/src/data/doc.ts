@@ -160,7 +160,7 @@ const D: any = {
   profileTitle: "12の顔を持つ唯一無二の存在",
   profileName: "地球平和エンターテイナーJACK12",
   profileRole: "",
-  profileBody: "JACK12は一つの肩書きでは語れない存在です。エンターテイナー、国際外交、経営者、教育者などとして活動し、目指す先を世界平和に置いています。",
+  profileBody: "JACK12は一つの肩書きでは語れない存在です。エンターテイナー、国際外交、経営者、教育者などとして活動していますが、目指す先はただ一つ、世界平和です。",
   profileFaces: [
     { head: "① JACK12 GLOBAL HOLDINGS 合同会社 CEO", body: "すべての活動の起点となる、経営の顔。" },
     { head: "② バリ王宮名誉親善大使", body: "バリ島の王様より正式に授与された、国際外交の顔。" },
