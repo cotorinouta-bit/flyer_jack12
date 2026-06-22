@@ -119,7 +119,7 @@ const D: any = {
     },
   },
 
-  beforeForImage: { file: "jack12-before-for.jpg", caption: "上質な場での佇まいと、信頼を育てる空気感。", focal: { x: 0.55, y: 0.48 } },
+  beforeForImage: { file: "jack12-before-for.jpg", caption: "", focal: { x: 0.55, y: 0.48 } },
   forImage: { file: "IMG_8280 2.JPG", caption: "上質な場での対話と交流を大切にしたプログラムです。", focal: { x: 0.43, y: 0.48 } },
 
   scrollProgramTitle: "プログラム・金額一覧",

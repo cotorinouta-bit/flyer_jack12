@@ -123,8 +123,9 @@ export function PhotoBox({
 
 /** ImageCard（写真＋キャプション）をまとめて編集 */
 export function PicCard({ path, className, radius = 24, captionClass = "cap", defH = 440 }: { path: Path; className?: string; radius?: number; captionClass?: string; defH?: number }) {
-  const { doc, setSelection } = useDoc();
+  const { doc, setSelection, editable } = useDoc();
   const card = getPath(doc, path);
+  const caption = String(card.caption || "").trim();
   return (
     <figure className={"piccard " + (className || "")}>
       <Resizable id={path.join(".") + ".h"} def={defH}>
@@ -137,7 +138,7 @@ export function PicCard({ path, className, radius = 24, captionClass = "cap", de
           fill
         />
       </Resizable>
-      <Field path={[...path, "caption"]} className={captionClass} />
+      {(caption || editable) ? <Field path={[...path, "caption"]} className={captionClass} /> : null}
     </figure>
   );
 }
