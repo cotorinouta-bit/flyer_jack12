@@ -81,6 +81,9 @@ export function Scroll({ tone, variant }: { tone: Tone; variant: string }) {
         </section>
         <GapResizer id="gap.profile" />
 
+        <PicCard path={["beforeForImage"]} className="s-wide s-before-for" defH={560} />
+        <GapResizer id="gap.beforeForImage" />
+
         {/* FOR */}
         <section className="s-sec">
           <Label>FOR YOU</Label>
@@ -118,15 +121,18 @@ export function Scroll({ tone, variant }: { tone: Tone; variant: string }) {
           <Field path={["scrollProgramTitle"]} className="s-title" as="h2" />
           <Field path={["scrollProgramIntro"]} className="s-intro" as="p" />
           <div className="s-cards">
-            {doc.programs.map((_, i) => (
+            {doc.programs.map((_, i) => {
+              const accent = t.cardAccents[i % t.cardAccents.length];
+              return (
               <div className="s-card" key={i} style={sizeStyle(doc.sizes, "progCard." + i, "minHeight")}>
-                <div className="s-card-bar" style={{ background: t.cardAccents[i] }} />
+                <div className="s-card-bar" style={{ background: accent }} />
                 <Field path={["programs", i, "title"]} className="s-card-title" as="div" />
-                <Field path={["programs", i, "price"]} className="s-card-price" as="div" style={{ color: t.cardAccents[i] }} />
+                <Field path={["programs", i, "price"]} className="s-card-price" as="div" style={{ color: accent }} />
                 <Field path={["programs", i, "desc"]} className="s-card-desc" as="div" />
                 <BottomHandle id={"progCard." + i} />
               </div>
-            ))}
+              );
+            })}
           </div>
         </section>
         <GapResizer id="gap.program" />

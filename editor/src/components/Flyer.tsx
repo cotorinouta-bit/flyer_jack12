@@ -49,16 +49,19 @@ export function Flyer({ tone, variant }: { tone: Tone; variant: string }) {
         <Field path={["flyerCardsTitle"]} className="f-sec-title" as="h2" />
         <Field path={["variants", variant, "flyer", tone, "cardsSub"]} className="f-sec-sub" as="div" />
         <div className="f-cards">
-          {doc.flyerCards.map((_, i) => (
+          {doc.flyerCards.map((_, i) => {
+            const accent = t.cardAccents[i % t.cardAccents.length];
+            return (
             <div className="f-card" key={i} style={sizeStyle(doc.sizes, "fcard." + i, "minHeight")}>
-              <div className="f-card-bar" style={{ background: t.cardAccents[i] }} />
+              <div className="f-card-bar" style={{ background: accent }} />
               <Field path={["flyerCards", i, "title"]} className="f-card-title" as="div" />
-              <Field path={["flyerCards", i, "price"]} className="f-card-price" as="div" style={{ color: t.cardAccents[i] }} />
+              <Field path={["flyerCards", i, "price"]} className="f-card-price" as="div" style={{ color: accent }} />
               <Field path={["flyerCards", i, "tag"]} className="f-card-tag" as="div" style={{ color: t.gold }} />
               <Field path={["flyerCards", i, "desc"]} className="f-card-desc" as="div" />
               <BottomHandle id={"fcard." + i} min={40} />
             </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 

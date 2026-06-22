@@ -66,6 +66,7 @@ export interface Doc {
   variant: string;
   variants: Record<string, VariantCopy>;
   forImage: ImageCard;
+  beforeForImage: ImageCard;
   scrollProgramTitle: string; scrollProgramIntro: string;
   flyerCardsTitle: string;
   programs: Program[];
