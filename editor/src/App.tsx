@@ -9,7 +9,7 @@ import { Flyer } from "./components/Flyer";
 import { FreeLayer } from "./components/FreeLayer";
 import { RightPanel } from "./components/RightPanel";
 
-const LS_KEY = "jack12doc.v1";
+const LS_KEY = "jack12doc.v2";
 const PW_KEY = "jack12panelW";
 
 function tokenVars(t: Tokens): React.CSSProperties {
@@ -150,12 +150,7 @@ export function App() {
 
   const update = (path: Path, value: any) => commit(setPath(doc, path, value), path.join("."));
 
-  // export時もlocalStorageの最新docを使う
-  useEffect(() => {
-    if (renderMode) {
-      try { const s = localStorage.getItem(LS_KEY); if (s) { const d = JSON.parse(s); if (d && d.variants) { if (!d.free) d.free = { scroll: [], flyer: [] }; if (!d.sizes) d.sizes = {}; setDoc(sanitizeDoc(d)); } } } catch {}
-    }
-  }, [renderMode]);
+  // 公開・表示専用ページは常に同梱の最新データを使う。
   useEffect(() => { if (!renderMode) localStorage.setItem(LS_KEY, JSON.stringify(doc)); }, [doc, renderMode]);
   useEffect(() => { localStorage.setItem(PW_KEY, String(panelW)); }, [panelW]);
   useEffect(() => { localStorage.setItem("jack12gridOn", gridOn ? "1" : "0"); localStorage.setItem("jack12gridSize", String(gridSize)); localStorage.setItem("jack12gridSnap", gridSnap ? "1" : "0"); }, [gridOn, gridSize, gridSnap]);
@@ -222,8 +217,8 @@ export function App() {
   }
 
   const ctx = useMemo(
-    () => ({ doc, update, selection, setSelection, editable: !renderMode, grid: { on: gridOn, size: gridSize, snap: gridSnap }, freeSel, setFreeSel }),
-    [doc, selection, renderMode, gridOn, gridSize, gridSnap, freeSel]
+    () => ({ doc, update, selection, setSelection, editable: !(renderMode || publicMode), grid: { on: gridOn, size: gridSize, snap: gridSnap }, freeSel, setFreeSel }),
+    [doc, selection, renderMode, publicMode, gridOn, gridSize, gridSnap, freeSel]
   );
 
   // 選択中の案が消えている場合（Undo/削除直後など）に安全なキーへフォールバック
