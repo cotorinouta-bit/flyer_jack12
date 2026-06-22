@@ -183,8 +183,12 @@ body.is-exporting-jpg .free-move { display: none !important; }
 .s-card-price { font-size: 43px; font-weight: 800; margin: 10px 0; }
 .s-card-desc { font-size: 25px; line-height: 1.7; color: var(--muted); }
 
-.s-pname { font-family: var(--font-s); font-size: 66px; margin-bottom: 8px; }
+.s-pname { font-family: var(--font-s); font-size: 54px; margin-bottom: 8px; }
 .s-prole { font-size: 30px; line-height: 1.5; white-space: pre-wrap; margin-bottom: 18px; }
+.s-profile-faces .s-bullets { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 28px; }
+.s-profile-faces .s-bullet { min-width: 0; }
+.s-profile-faces .s-b-head { font-size: 27px; }
+.s-profile-faces .s-b-body { font-size: 22px; line-height: 1.62; }
 
 .s-decision { position: relative; border-radius: 28px; padding: 44px; color: #fff; margin-top: 44px; }
 .s-d-title { font-size: 42px; font-weight: 800; margin: 0 0 28px; }

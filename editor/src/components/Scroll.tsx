@@ -33,6 +33,7 @@ export function Scroll({ tone, variant }: { tone: Tone; variant: string }) {
   const heroFocal = doc.heroFocalScroll;
   const pill = "";
   const disclaimer = doc.disclaimer.trim();
+  const profileRole = doc.profileRole.trim();
 
   return (
     <div className="scroll">
@@ -67,6 +68,19 @@ export function Scroll({ tone, variant }: { tone: Tone; variant: string }) {
       </header>
 
       <div className="s-body">
+        {/* PROFILE */}
+        <section className="s-sec">
+          <Label>PROFILE</Label>
+          {doc.profileTitle.trim() ? <Field path={["profileTitle"]} className="s-title" as="h2" /> : null}
+          <Field path={["profileName"]} className="s-pname" as="div" />
+          {profileRole ? <Field path={["profileRole"]} className="s-prole" as="div" style={{ color: t.primary }} /> : null}
+          <Field path={["profileBody"]} className="s-intro" as="p" />
+          <div className="s-profile-faces">
+            <Bullets base={["profileFaces"]} dotColor={t.primary} />
+          </div>
+        </section>
+        <GapResizer id="gap.profile" />
+
         {/* FOR */}
         <section className="s-sec">
           <Label>FOR YOU</Label>
@@ -123,15 +137,6 @@ export function Scroll({ tone, variant }: { tone: Tone; variant: string }) {
           <Field path={["valueTitle"]} className="s-title" as="h2" />
           <Field path={["valueIntro"]} className="s-intro" as="p" />
           <Bullets base={["valueBullets"]} dotColor={t.primary} />
-        </section>
-
-        {/* PROFILE */}
-        <section className="s-sec">
-          <Label>OFFICIAL PROFILE</Label>
-          {doc.profileTitle.trim() ? <Field path={["profileTitle"]} className="s-title" as="h2" /> : null}
-          <Field path={["profileName"]} className="s-pname" as="div" />
-          <Field path={["profileRole"]} className="s-prole" as="div" style={{ color: t.primary }} />
-          <Field path={["profileBody"]} className="s-intro" as="p" />
         </section>
 
         {/* TRUST */}

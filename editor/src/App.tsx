@@ -3,7 +3,7 @@ import { toJpeg } from "html-to-image";
 import type { Doc, Tone, Output, Tokens } from "./types";
 import { initialDoc } from "./data/doc";
 import { DocProvider, Selection } from "./editing";
-import { setPath, Path, assetUrl } from "./util";
+import { setPath, Path } from "./util";
 import { Scroll } from "./components/Scroll";
 import { Flyer } from "./components/Flyer";
 import { FreeLayer } from "./components/FreeLayer";
@@ -53,59 +53,62 @@ function sanitizeDoc<T>(value: T): T {
     }
     return v;
   };
-  return walk(value);
+  return applyContentMigrations(walk(value));
 }
 
-function ChoiceIndex() {
-  const base = import.meta.env.BASE_URL;
-  const choices = [
-    {
-      title: "上品",
-      desc: "落ち着いた信頼感で見せる縦長版",
-      href: `${base}?render=1&output=scroll&tone=elegant`,
-    },
-    {
-      title: "熱量",
-      desc: "勢いと力強さで見せる縦長版",
-      href: `${base}?render=1&output=scroll&tone=passion`,
-    },
-    {
-      title: "両方を比較",
-      desc: "上品と熱量を横に並べて確認",
-      href: `${base}jack12_scroll_both.html`,
-    },
-  ];
+function applyContentMigrations<T>(value: T): T {
+  const d: any = value;
+  if (!d || typeof d !== "object" || !d.variants) return value;
+  const fresh: any = initialDoc;
 
-  return (
-    <main className="choice-page">
-      <div
-        className="choice-bg"
-        style={{ backgroundImage: `linear-gradient(90deg, rgba(0,0,0,.72), rgba(0,0,0,.40)), url("${assetUrl("IMG_8274 2.JPG")}")` }}
-      />
-      <section className="choice-panel" aria-label="JACK12 表示選択">
-        <p className="choice-eyebrow">JACK12 PEACE PROGRAM</p>
-        <h1>表示する資料を選択</h1>
-        <div className="choice-grid">
-          {choices.map((choice) => (
-            <a className="choice-card" href={choice.href} key={choice.title}>
-              <span>{choice.title}</span>
-              <small>{choice.desc}</small>
-            </a>
-          ))}
-        </div>
-        <a className="choice-edit" href={`${base}?edit=1`}>エディターを開く</a>
-      </section>
-    </main>
-  );
+  const oldProfile = !Array.isArray(d.profileFaces) || !d.profileFaces.length || String(d.profileBody || "").includes("名誉親善大使");
+  if (oldProfile) {
+    d.profileTitle = fresh.profileTitle;
+    d.profileName = fresh.profileName;
+    d.profileRole = fresh.profileRole;
+    d.profileBody = fresh.profileBody;
+    d.profileFaces = clone(fresh.profileFaces);
+  }
+
+  if (String(d.scrollMission || "").includes("世界に平和")) d.scrollMission = fresh.scrollMission;
+  if (String(d.flyerMissionText || "").includes("地球平和")) d.flyerMissionText = fresh.flyerMissionText;
+
+  const oldProgram = String(d.programs?.[0]?.price || "").includes("月額 1,320") || String(d.programs?.[0]?.desc || "").includes("14,400");
+  if (oldProgram) d.programs[0] = clone(fresh.programs[0]);
+  const oldFlyerCard = String(d.flyerCards?.[0]?.tag || "").includes("14,400") || String(d.flyerCards?.[0]?.desc || "").includes("1,440");
+  if (oldFlyerCard) d.flyerCards[0] = clone(fresh.flyerCards[0]);
+
+  if (String(d.trust?.[0]?.intro || "").includes("名誉親善大使")) d.trust[0].intro = fresh.trust[0].intro;
+  if (String(d.trust?.[0]?.bullets?.[0]?.head || "").includes("名誉親善大使")) d.trust[0].bullets[0] = clone(fresh.trust[0].bullets[0]);
+  const sriLankaCaption = d.trust?.[1]?.pairs?.[1]?.left?.caption;
+  if (typeof sriLankaCaption === "string" && sriLankaCaption.includes("スリランカ要人")) {
+    d.trust[1].pairs[1].left.caption = fresh.trust[1].pairs[1].left.caption;
+  }
+
+  Object.keys(d.variants || {}).forEach((id) => {
+    const freshVariant = fresh.variants[id] || fresh.variants[fresh.variant];
+    const target = d.variants[id]?.scroll?.elegant;
+    if (target && freshVariant?.scroll?.elegant && String(target.h1 || "").includes("仕事")) {
+      target.h1 = freshVariant.scroll.elegant.h1;
+      target.heroBody = freshVariant.scroll.elegant.heroBody;
+    }
+    const flyerTarget = d.variants[id]?.flyer?.elegant;
+    if (flyerTarget && freshVariant?.flyer?.elegant && String(flyerTarget.title?.join("") || "").includes("仕事")) {
+      flyerTarget.title = clone(freshVariant.flyer.elegant.title);
+    }
+  });
+
+  return d;
 }
 
 export function App() {
   const params = new URLSearchParams(location.search);
   const renderMode = params.get("render") === "1";
   const editMode = params.get("edit") === "1";
+  const publicMode = !renderMode && !editMode;
 
   const [doc, setDoc] = useState<Doc>(() => {
-    if (renderMode) return initialDoc;
+    if (renderMode || publicMode) return initialDoc;
     try {
       const s = localStorage.getItem(LS_KEY);
       if (s) { const d = JSON.parse(s); if (d && d.variants) { if (!d.free) d.free = { scroll: [], flyer: [] }; if (!d.sizes) d.sizes = {}; return sanitizeDoc(d) as Doc; } }
@@ -234,12 +237,8 @@ export function App() {
     </div>
   );
 
-  if (renderMode) {
+  if (renderMode || publicMode) {
     return <DocProvider value={ctx}><div className="render-only">{canvas}</div></DocProvider>;
-  }
-
-  if (!editMode) {
-    return <ChoiceIndex />;
   }
 
   const exportFile = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -72,7 +72,7 @@ export interface Doc {
   flyerCards: Program[];
   mediaTitle: string; mediaIntro: string; mediaBullets: Bullet[]; mediaImages: ImageCard[];
   valueTitle: string; valueIntro: string; valueBullets: Bullet[];
-  profileTitle: string; profileName: string; profileRole: string; profileBody: string;
+  profileTitle: string; profileName: string; profileRole: string; profileBody: string; profileFaces: Bullet[];
   trust: TrustSection[];
   flyerProfile: { label: string; name: string; role: string; body: string; thumbs: ImageCard[] };
   band: { heading: string; lines: string[]; thumbs: ImageCard[] };
