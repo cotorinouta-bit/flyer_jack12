@@ -14,6 +14,12 @@ export interface TrustSection {
   pairs?: Pair[];
   wide?: ImageCard[];
 }
+export interface OfferDetail {
+  code: string;
+  title: string;
+  intro: string;
+  bullets: Bullet[];
+}
 
 export interface Tokens {
   paper: string; ink: string; soft: string; muted: string; cream: string; gold: string;
@@ -75,6 +81,7 @@ export interface Doc {
   valueTitle: string; valueIntro: string; valueBullets: Bullet[];
   profileTitle: string; profileName: string; profileRole: string; profileBody: string; profileFaces: Bullet[];
   trust: TrustSection[];
+  offerDetails: OfferDetail[];
   flyerProfile: { label: string; name: string; role: string; body: string; thumbs: ImageCard[] };
   band: { heading: string; lines: string[]; thumbs: ImageCard[] };
   footerLabel: string; footerNote: string;

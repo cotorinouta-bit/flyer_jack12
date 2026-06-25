@@ -9,7 +9,7 @@ import { Flyer } from "./components/Flyer";
 import { FreeLayer } from "./components/FreeLayer";
 import { RightPanel } from "./components/RightPanel";
 
-const LS_KEY = "jack12doc.v2";
+const LS_KEY = "jack12doc.v3";
 const PW_KEY = "jack12panelW";
 
 function tokenVars(t: Tokens): React.CSSProperties {
@@ -60,6 +60,10 @@ function applyContentMigrations<T>(value: T): T {
   const d: any = value;
   if (!d || typeof d !== "object" || !d.variants) return value;
   const fresh: any = initialDoc;
+
+  if (!Array.isArray(d.offerDetails) || !d.offerDetails.length) d.offerDetails = clone(fresh.offerDetails);
+  if (!Array.isArray(d.programs) || d.programs.length !== fresh.programs.length) d.programs = clone(fresh.programs);
+  if (!Array.isArray(d.flyerCards) || d.flyerCards.length !== fresh.flyerCards.length) d.flyerCards = clone(fresh.flyerCards);
 
   const oldProfile = !Array.isArray(d.profileFaces) || !d.profileFaces.length || String(d.profileBody || "").includes("名誉親善大使");
   if (oldProfile) {

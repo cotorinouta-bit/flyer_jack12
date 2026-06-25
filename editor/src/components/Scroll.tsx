@@ -94,58 +94,7 @@ export function Scroll({ tone, variant }: { tone: Tone; variant: string }) {
         </section>
         <GapResizer id="gap.for" />
 
-        {/* WHY */}
-        <section className="s-sec">
-          <Label>WHY JACK12</Label>
-          <Field path={["variants", variant, "scroll", tone, "whyTitle"]} className="s-title" as="h2" />
-          <Field path={["variants", variant, "scroll", tone, "whyIntro"]} className="s-intro" as="p" />
-          <Bullets base={["variants", variant, "scroll", tone, "whyBullets"]} dotColor={t.primary} />
-        </section>
-        <GapResizer id="gap.why" />
-
-        {/* MEDIA */}
-        <section className="s-sec">
-          <Label>MEDIA &amp; STAGE</Label>
-          <Field path={["mediaTitle"]} className="s-title" as="h2" />
-          <Field path={["mediaIntro"]} className="s-intro" as="p" />
-          <Bullets base={["mediaBullets"]} dotColor={t.primary} />
-          {doc.mediaImages.map((_, i) => (
-            <PicCard key={i} path={["mediaImages", i]} className="s-wide" defH={440} />
-          ))}
-        </section>
-        <GapResizer id="gap.media" />
-
-        {/* PROGRAM */}
-        <section className="s-sec">
-          <Label>PROGRAM</Label>
-          <Field path={["scrollProgramTitle"]} className="s-title" as="h2" />
-          <Field path={["scrollProgramIntro"]} className="s-intro" as="p" />
-          <div className="s-cards">
-            {doc.programs.map((_, i) => {
-              const accent = t.cardAccents[i % t.cardAccents.length];
-              return (
-              <div className="s-card" key={i} style={sizeStyle(doc.sizes, "progCard." + i, "minHeight")}>
-                <div className="s-card-bar" style={{ background: accent }} />
-                <Field path={["programs", i, "title"]} className="s-card-title" as="div" />
-                <Field path={["programs", i, "price"]} className="s-card-price" as="div" style={{ color: accent }} />
-                <Field path={["programs", i, "desc"]} className="s-card-desc" as="div" />
-                <BottomHandle id={"progCard." + i} />
-              </div>
-              );
-            })}
-          </div>
-        </section>
-        <GapResizer id="gap.program" />
-
-        {/* VALUE */}
-        <section className="s-sec">
-          <Label>VALUE FOR EXECUTIVES</Label>
-          <Field path={["valueTitle"]} className="s-title" as="h2" />
-          <Field path={["valueIntro"]} className="s-intro" as="p" />
-          <Bullets base={["valueBullets"]} dotColor={t.primary} />
-        </section>
-
-        {/* TRUST */}
+        {/* ACHIEVEMENTS / INTERNATIONAL STAGE */}
         {doc.trust.map((ts, ti) => (
           <section className="s-sec" key={ti}>
             <Label>{ts.code}</Label>
@@ -161,6 +110,49 @@ export function Scroll({ tone, variant }: { tone: Tone; variant: string }) {
             {ts.wide?.map((_, wi) => (
               <PicCard key={wi} path={["trust", ti, "wide", wi]} className="s-wide" defH={470} />
             ))}
+            {ti === 0 ? doc.mediaImages.map((_, i) => (
+              <PicCard key={i} path={["mediaImages", i]} className="s-wide" defH={440} />
+            )) : null}
+          </section>
+        ))}
+
+        {/* VALUE */}
+        <section className="s-sec">
+          <Label>BENEFITS</Label>
+          <Field path={["valueTitle"]} className="s-title" as="h2" />
+          <Field path={["valueIntro"]} className="s-intro" as="p" />
+          <Bullets base={["valueBullets"]} dotColor={t.primary} />
+        </section>
+
+        {/* PROGRAM */}
+        <section className="s-sec">
+          <Label>PROGRAM</Label>
+          <Field path={["scrollProgramTitle"]} className="s-title" as="h2" />
+          <Field path={["scrollProgramIntro"]} className="s-intro" as="p" />
+          <div className="s-cards">
+            {doc.programs.map((_, i) => {
+              const accent = t.primary;
+              return (
+              <div className="s-card" key={i} style={sizeStyle(doc.sizes, "progCard." + i, "minHeight")}>
+                <div className="s-card-bar" style={{ background: accent }} />
+                <Field path={["programs", i, "title"]} className="s-card-title" as="div" />
+                <Field path={["programs", i, "price"]} className="s-card-price" as="div" style={{ color: accent }} />
+                <Field path={["programs", i, "desc"]} className="s-card-desc" as="div" />
+                <BottomHandle id={"progCard." + i} />
+              </div>
+              );
+            })}
+          </div>
+        </section>
+        <GapResizer id="gap.program" />
+
+        {/* SERVICE DETAILS */}
+        {doc.offerDetails.map((detail, di) => (
+          <section className="s-sec" key={di}>
+            <Label>{detail.code}</Label>
+            <Field path={["offerDetails", di, "title"]} className="s-title" as="h2" />
+            <Field path={["offerDetails", di, "intro"]} className="s-intro" as="p" />
+            <Bullets base={["offerDetails", di, "bullets"]} dotColor={t.primary} />
           </section>
         ))}
 

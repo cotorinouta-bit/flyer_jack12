@@ -50,7 +50,7 @@ export function Flyer({ tone, variant }: { tone: Tone; variant: string }) {
         <Field path={["variants", variant, "flyer", tone, "cardsSub"]} className="f-sec-sub" as="div" />
         <div className="f-cards">
           {doc.flyerCards.map((_, i) => {
-            const accent = t.cardAccents[i % t.cardAccents.length];
+            const accent = t.primary;
             return (
             <div className="f-card" key={i} style={sizeStyle(doc.sizes, "fcard." + i, "minHeight")}>
               <div className="f-card-bar" style={{ background: accent }} />
