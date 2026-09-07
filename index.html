@@ -4,10 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JACK12 フライヤーエディタ</title>
-    <script type="module" crossorigin src="/flyer_jack12/static/index-DryAK-2c.js"></script>
+    <script type="module" crossorigin src="/flyer_jack12/static/index-DryAK-2c.js?v=20260907-2"></script>
     <link rel="stylesheet" crossorigin href="/flyer_jack12/static/index-ByezsDhV.css">
+    <link rel="stylesheet" href="/flyer_jack12/static/profile-enhancements.css?v=20260907-2">
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      const fitPublicFlyer = () => {
+        const flyer = document.querySelector('.render-only');
+        if (!flyer) return;
+        const canvas = flyer.querySelector('#canvas-root');
+        if (!canvas) return;
+        const canvasWidth = canvas.offsetWidth || 1080;
+        const scale = Math.min(0.55, Math.max(0.2, (window.innerWidth - 24) / canvasWidth));
+        canvas.style.transform = `scale(${scale})`;
+        canvas.style.transformOrigin = 'top left';
+        flyer.style.width = `${canvasWidth * scale}px`;
+        flyer.style.height = `${canvas.offsetHeight * scale}px`;
+      };
+
+      window.addEventListener('load', fitPublicFlyer);
+      window.addEventListener('resize', fitPublicFlyer);
+    </script>
   </body>
 </html>
