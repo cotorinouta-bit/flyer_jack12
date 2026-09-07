@@ -13,17 +13,38 @@
     <script>
       const fitPublicFlyer = () => {
         const flyer = document.querySelector('.render-only');
-        if (!flyer) return;
+        if (!flyer) return false;
         const canvas = flyer.querySelector('#canvas-root');
-        if (!canvas) return;
+        if (!canvas) return false;
         const canvasWidth = canvas.offsetWidth || 1080;
         const scale = Math.min(0.55, Math.max(0.2, (window.innerWidth - 24) / canvasWidth));
         canvas.style.transform = `scale(${scale})`;
         canvas.style.transformOrigin = 'top left';
         flyer.style.width = `${canvasWidth * scale}px`;
         flyer.style.height = `${canvas.offsetHeight * scale}px`;
+        document.documentElement.style.overflowX = 'hidden';
+        document.body.style.overflowX = 'hidden';
+        return true;
       };
 
+      const startPublicFlyerFit = () => {
+        let attempts = 0;
+        const retryUntilReady = () => {
+          if (fitPublicFlyer() || attempts++ > 180) return;
+          requestAnimationFrame(retryUntilReady);
+        };
+        retryUntilReady();
+
+        const root = document.getElementById('root');
+        if (root) {
+          new MutationObserver(fitPublicFlyer).observe(root, {
+            childList: true,
+            subtree: true,
+          });
+        }
+      };
+
+      document.addEventListener('DOMContentLoaded', startPublicFlyerFit);
       window.addEventListener('load', fitPublicFlyer);
       window.addEventListener('resize', fitPublicFlyer);
     </script>
